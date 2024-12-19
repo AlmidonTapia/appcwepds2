@@ -1,0 +1,41 @@
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            <h4>Registro de Países</h4>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="frmPaisInsert">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="pais">Nombre del País:</label>
+                            <input type="text" class="form-control" id="pais" placeholder="Nombre del país" formControlName="pais" />
+                        </div>
+                        <button type="submit" class="btn btn-primary m-2" (click)="save()">Registrar</button>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>País</th>
+                                    <th>Fecha de Registro</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let value of listPaises">
+                                    <td>{{ value.Name }}</td>
+                                    <td>{{ value.createdAt | date:'dd-MM-yyyy HH:mm'}}</td>
+                                    <td>
+                                        <button class="btn btn-danger"(click)="delete(value.idPais)">Eliminar</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>Total de registros: {{ listPaises.length }}</p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
