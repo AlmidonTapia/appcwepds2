@@ -9,30 +9,48 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="pais">Nombre del País:</label>
-                            <input type="text" class="form-control" id="pais" placeholder="Nombre del país" formControlName="pais" />
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                id="Pais" 
+                                placeholder="Ingrese un nombre" 
+                                formControlName="Pais"
+                                style="width: 400px;"
+                            />
+                            <div *ngIf="(nombrePaisFb.touched || nombrePaisFb.dirty) && nombrePaisFb.errors && nombrePaisFb.hasError('required')" class="divError">Este campo es requerido.</div>
+
                         </div>
                         <button type="submit" class="btn btn-primary m-2" (click)="save()">Registrar</button>
                     </div>
-                    <div class="col-md-6">
-                        <table class="table table-striped">
-                            <thead>
+                    <div class="col-md-6 justify-content-end">
+                        <div class="input-group mb-3">
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                placeholder="Buscar país" 
+                                formControlName="search" 
+                            />
+                            <button type="button" class="btn btn-secondary" (click)="clearSearch()">Limpiar</button>
+                        </div>
+                        <table class="table table-striped  table-bordered text-center">
+                            <thead class="table-dark">
                                 <tr>
-                                    <th>País</th>
-                                    <th>Fecha de Registro</th>
-                                    <th>Acciones</th>
+                                    <th scope="col">País</th>
+                                    <th scope="col">Fecha de Registro</th>
+                                    <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let value of listPaises">
+                                <tr *ngFor="let value of filteredPaises">
                                     <td>{{ value.Name }}</td>
-                                    <td>{{ value.createdAt | date:'dd-MM-yyyy HH:mm'}}</td>
+                                    <td>{{ value.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
                                     <td>
-                                        <button class="btn btn-danger"(click)="delete(value.idPais)">Eliminar</button>
+                                        <button class="btn btn-danger" (click)="delete(value.idPais)">Eliminar</button>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <p>Total de registros: {{ listPaises.length }}</p>
+                        <b>Total de registros: {{ filteredPaises.length }}</b>
                     </div>
                 </div>
             </form>

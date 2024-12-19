@@ -27,7 +27,7 @@ export class PaisComponent implements OnInit {
       }
     });
     this.searchControl.valueChanges.subscribe(value => {
-      this.searchQuery = value; // Actualiza searchQuery
+      this.searchQuery = value;
     });
   }
    
@@ -41,13 +41,19 @@ export class PaisComponent implements OnInit {
   ){
     
     this.frmPaisInsert = this.formBuilder.group({
-      Pais: ['', []],
+      Pais: ['', [Validators.required]],
       search: ['']
 
     });
     this.searchControl = this.frmPaisInsert.get('search') as FormControl;
   }
   public save(): void {
+    if (!this.frmPaisInsert.valid) {
+      this.frmPaisInsert.markAllAsTouched();
+      this.frmPaisInsert.markAsDirty();
+
+      return;
+    }
 
     let formData = new FormData();
 
@@ -55,10 +61,10 @@ export class PaisComponent implements OnInit {
 
     this.paisService.insert(formData).subscribe({
       next: (response: any) => {
-        console.log(response);
-      },
+        console.log(response);      },
       error: (error: any) => {
         console.log(error);
+        this.loadData();
       }
     });
   }
@@ -83,6 +89,17 @@ export class PaisComponent implements OnInit {
 
   clearSearch(): void {
     this.searchControl.setValue('');
+  }
+
+  loadData(): void {
+    this.paisService.getAll().subscribe({
+      next: (response: any) => {
+        this.listPaises = response.response.listPais;
+      },
+      error: (error: any) => {
+        console.log(error);
+      }
+    });
   }
 
 }
