@@ -1,4 +1,5 @@
-# Appcwepds2
+# Frontend del primer parcial de desarrollo de software 2 2024-II
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.9.
 
